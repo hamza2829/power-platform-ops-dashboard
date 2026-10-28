@@ -11,7 +11,7 @@ The business story: service managers want to see demand, missed delivery promise
 | Component | Current status |
 | --- | --- |
 | Seeded Python generator, four CSVs and manifest | **Implemented and executed** with seed 42 |
-| Python tests / reference checker | **28 tests passed locally**; Ubuntu CI workflow included (see badge and [verification](docs/VERIFICATION.md)) |
+| Python tests / reference checker | **28 tests passed locally and in Ubuntu CI**; [successful run](https://github.com/hamza2829/power-platform-ops-dashboard/actions/runs/40704930392) and [verification](docs/VERIFICATION.md) |
 | Power Query / DAX | Commented source and definitions prepared; **not executed in Desktop yet** |
 | Three-page Power BI report / PBIX | **You will build it locally**; no PBIX supplied yet |
 | Screenshots | Placeholders; add your actual captures after building |
@@ -187,7 +187,7 @@ These are not exported runnable solutions and have not been built/tested in a te
 
 ## How I used AI and how I checked it
 
-AI (Codex) prepared the generator, tests, M/DAX source, report instructions and optional app/flow designs. Codex executed the Python generator, ran **28 passing local tests**, and verified seed-42 CSV bytes/checksums and reference totals. Formula patterns and modeling decisions were reviewed against linked Microsoft documentation. Automated tests check the Python behavior; they do not prove the M/DAX formulas or optional tenant designs run successfully.
+AI (Codex) prepared the generator, tests, M/DAX source, report instructions and optional app/flow designs. Codex executed the Python generator, ran **28 passing local tests**, verified seed-42 CSV bytes/checksums and reference totals, and confirmed **28 passing tests in Ubuntu GitHub Actions**. Formula patterns and modeling decisions were reviewed against linked Microsoft documentation. Automated tests check the Python behavior; they do not prove the M/DAX formulas or optional tenant designs run successfully.
 
 **My personal Power BI checks are pending.** After building, record what you actually did in [BUILD_STATUS.md](docs/BUILD_STATUS.md): dirty-record inspection, model relationships, reference comparisons, slicers/drill-through and screenshots. Use [the interview notes](docs/INTERVIEW_NOTES.md) to explain the decisions in your own words. Do not claim hands-on app/flow experience from design documents or claim that AI's tests are your manual Desktop validation.
 

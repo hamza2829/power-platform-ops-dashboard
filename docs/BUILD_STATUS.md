@@ -7,7 +7,7 @@ Prepared on **28 October 2026** with AI assistance in Codex. This file records w
 | Python seeded generator and raw CSVs | Implemented and executed by Codex on Windows, Python 3.12.14 | `data/manifest.json`, four CSVs; seed 42 |
 | Generator/data-contract tests | **28 tests passed locally** | `python -m pytest -q`; see local execution note below |
 | Committed data and reference checker | Executed, passed | `python tools/verify_data.py --check` |
-| Ubuntu GitHub Actions | Workflow provided; exact run evidence recorded after publication | Root README CI badge and `docs/VERIFICATION.md` |
+| Ubuntu GitHub Actions | **28 tests passed; data/reference checker passed** | [Successful run](https://github.com/hamza2829/power-platform-ops-dashboard/actions/runs/40704930392); `docs/VERIFICATION.md` |
 | Power Query M | Source written and reviewed, **not executed in Desktop** | Four .pq files and explanations |
 | DAX and model | Source/specification written and reviewed, **not executed in a semantic model** | `dax/` and root model diagram |
 | Power BI report / PBIX | **Not built** | User will build locally; no PBIX supplied |
