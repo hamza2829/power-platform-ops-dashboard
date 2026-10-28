@@ -1,0 +1,5 @@
+# Tickets query, in plain words
+
+Load `service_tickets.csv`, keep the first ticket ID, and parse ISO dates. Keep an unknown creation date as null. Clear a closure before creation. An empty source closure means `Open`; a supplied but invalid closure means `Unknown`, not Open. A valid closure means `Closed`. Unknown priorities become `Unknown`. Expected result: **1,500 rows**.
+
+`resolution_days` is closure minus creation when both dates are usable. Open and unknown-duration tickets are excluded from the average. Join cleaned Orders to copy `customer_id` and `product_group` into Tickets. One order can have several tickets; these dimension keys let one region/product slicer filter both facts without a direct fact-to-fact relationship. `data_quality_issue` flags missing creation dates, invalid closures/priorities, or unmatched orders. The orders' delivery lead time and late flag are not ticket resolution measures; no ticket SLA is invented. Verify this script in Desktop; CI only runs Python.

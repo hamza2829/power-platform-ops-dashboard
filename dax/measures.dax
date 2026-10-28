@@ -1,0 +1,97 @@
+// Create ONE measure at a time via Modeling > New measure, in the order below.
+// These are separate definitions, not one executable DAX query. Home table: Orders.
+
+// 01 | Non-cancelled booked order value in EUR; not invoiced/accounting revenue.
+Total Revenue =
+CALCULATE (
+    SUM ( Orders[order_value] ),
+    KEEPFILTERS ( Orders[status] <> "Cancelled" )
+)
+
+// 02 | All orders in context, including open/cancelled and invalid-value orders.
+Order Count = COUNTROWS ( Orders )
+
+// 03 | Delivered status, even if an actual delivery date is missing.
+Delivered Orders =
+CALCULATE ( [Order Count], KEEPFILTERS ( Orders[status] = "Delivered" ) )
+
+// 04 | Only assessable deliveries; FILTER demonstrates row-by-row eligibility.
+Eligible Deliveries =
+CALCULATE (
+    [Order Count],
+    FILTER (
+        Orders,
+        Orders[status] = "Delivered" && NOT ( ISBLANK ( Orders[late_flag] ) )
+    )
+)
+
+// 05 | Delivered after an original valid promise; unknown flags are excluded.
+Late Orders =
+CALCULATE ( [Order Count], KEEPFILTERS ( Orders[late_flag] = TRUE () ) )
+
+// 06 | Assessable deliveries on/before promise divided by assessable deliveries.
+On-Time Delivery Rate =
+DIVIDE ( [Eligible Deliveries] - [Late Orders], [Eligible Deliveries] )
+
+// 07 | Calendar-day actual lead time; AVERAGE ignores nulls.
+Average Lead Time Days =
+CALCULATE (
+    AVERAGE ( Orders[lead_time_days] ),
+    KEEPFILTERS ( Orders[status] = "Delivered" )
+)
+
+// 08 | Ticket events by creation date; more than one ticket can belong to an order.
+Ticket Count = COUNTROWS ( Tickets )
+
+// 09 | Event-volume ratio, NOT the share of this period's orders that had a ticket.
+Tickets per 100 Orders = DIVIDE ( [Ticket Count] * 100, [Order Count] )
+
+// 10 | Completed, known resolution durations; no assumption for unresolved tickets.
+Average Ticket Resolution Days = AVERAGE ( Tickets[resolution_days] )
+
+// 11 | Current Open status at the fixed snapshot, within the created-date selection.
+Open Tickets =
+CALCULATE ( [Ticket Count], KEEPFILTERS ( Tickets[ticket_status] = "Open" ) )
+
+// 12 | Previous-year booked value using the marked Date table.
+Revenue Previous Year =
+CALCULATE ( [Total Revenue], SAMEPERIODLASTYEAR ( 'Date'[Date] ) )
+
+// 13 | YoY growth is unknown when either side is missing; do not label it 0%.
+Revenue YoY % =
+VAR CurrentRevenue = [Total Revenue]
+VAR PreviousRevenue = [Revenue Previous Year]
+RETURN
+    IF (
+        NOT ( ISBLANK ( CurrentRevenue ) ) && NOT ( ISBLANK ( PreviousRevenue ) ),
+        DIVIDE ( CurrentRevenue - PreviousRevenue, PreviousRevenue )
+    )
+
+// 14 | Mean monthly value for three FULL calendar months, including the axis month.
+// Use on a Year Month line chart. Ignore the date slicer for the lookback window.
+// The first two source months and months outside the snapshot deliberately return blank.
+Revenue Rolling 3 Month Average =
+VAR MonthEnd = EOMONTH ( MAX ( 'Date'[Date] ), 0 )
+VAR WindowStart = EOMONTH ( MonthEnd, -3 ) + 1
+VAR DataStart = DATE ( 2024, 7, 1 )
+VAR DataEnd = DATE ( 2025, 12, 31 )
+RETURN
+    IF (
+        WindowStart >= DataStart && MonthEnd <= DataEnd,
+        DIVIDE (
+            CALCULATE (
+                COALESCE ( [Total Revenue], 0 ),
+                REMOVEFILTERS ( 'Date' ),
+                DATESBETWEEN ( 'Date'[Date], WindowStart, MonthEnd )
+            ),
+            3
+        )
+    )
+
+// 15 | Orders with a cleaning issue, for a visible data-quality check.
+Orders with Data Issues =
+CALCULATE ( [Order Count], KEEPFILTERS ( Orders[data_quality_issue] = TRUE () ) )
+
+// 16 | Tickets with a cleaning issue, separate from the business ticket count.
+Tickets with Data Issues =
+CALCULATE ( [Ticket Count], KEEPFILTERS ( Tickets[data_quality_issue] = TRUE () ) )

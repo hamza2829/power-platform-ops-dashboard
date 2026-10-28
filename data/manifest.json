@@ -1,0 +1,122 @@
+{
+  "as_of_date": "2025-12-31",
+  "currency": "EUR",
+  "deliberate_issues": [
+    {
+      "column": "promised_date",
+      "id": "ORD-000001",
+      "issue": "missing promise; estimate from product target",
+      "table": "orders"
+    },
+    {
+      "column": "delivered_date",
+      "id": "ORD-000002",
+      "issue": "delivered status but missing actual date",
+      "table": "orders"
+    },
+    {
+      "column": "order_date",
+      "id": "ORD-000003",
+      "issue": "missing order date; retain undated record",
+      "table": "orders"
+    },
+    {
+      "column": "order_value",
+      "id": "ORD-000004",
+      "issue": "invalid numeric value; retain as null",
+      "table": "orders"
+    },
+    {
+      "column": "delivered_date",
+      "id": "ORD-000005",
+      "issue": "delivery before order; clear actual date",
+      "table": "orders"
+    },
+    {
+      "column": "created_date",
+      "id": "TKT-000001",
+      "issue": "missing creation date; retain undated record",
+      "table": "service_tickets"
+    },
+    {
+      "column": "closed_date",
+      "id": "TKT-000002",
+      "issue": "invalid date type; status Unknown",
+      "table": "service_tickets"
+    },
+    {
+      "column": "closed_date",
+      "id": "TKT-000003",
+      "issue": "closure before creation; status Unknown",
+      "table": "service_tickets"
+    },
+    {
+      "column": "priority",
+      "id": "TKT-000004",
+      "issue": "unrecognized priority; map to Unknown",
+      "table": "service_tickets"
+    },
+    {
+      "column": "order_id",
+      "id": "ORD-000001",
+      "issue": "appended duplicate; first source occurrence wins",
+      "table": "orders"
+    },
+    {
+      "column": "order_id",
+      "id": "ORD-000002",
+      "issue": "appended duplicate; first source occurrence wins",
+      "table": "orders"
+    },
+    {
+      "column": "order_id",
+      "id": "ORD-000003",
+      "issue": "appended duplicate; first source occurrence wins",
+      "table": "orders"
+    },
+    {
+      "column": "ticket_id",
+      "id": "TKT-000001",
+      "issue": "appended duplicate; first source occurrence wins",
+      "table": "service_tickets"
+    },
+    {
+      "column": "ticket_id",
+      "id": "TKT-000002",
+      "issue": "appended duplicate; first source occurrence wins",
+      "table": "service_tickets"
+    },
+    {
+      "column": "customer_id",
+      "id": "CUS-0001",
+      "issue": "appended duplicate; first source occurrence wins",
+      "table": "customers"
+    },
+    {
+      "column": "product_group",
+      "id": "Sofas",
+      "issue": "appended duplicate; first source occurrence wins",
+      "table": "products"
+    }
+  ],
+  "files": {
+    "customers.csv": {
+      "rows": 801,
+      "sha256": "e0579e069041ae7a377bfc63ed5a0f9ea45ad4b3ee1fa8a57bcc90e58632ac9d"
+    },
+    "orders.csv": {
+      "rows": 5003,
+      "sha256": "27f8f8580134e2e87c2a34fc8ccc137c94af5275f7369260531b82e7dbec2fc2"
+    },
+    "products.csv": {
+      "rows": 6,
+      "sha256": "7c8989a2f8b65359ef575356bd85722a75338d9e4f5c6b23ec8dba307ba759a7"
+    },
+    "service_tickets.csv": {
+      "rows": 1502,
+      "sha256": "f50f05f9325df2cd222e1999df061f32f1022fd5a3c5f27ad2614b4786ff03dc"
+    }
+  },
+  "seed": 42,
+  "start_date": "2024-07-01"
+}

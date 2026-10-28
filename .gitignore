@@ -1,0 +1,15 @@
+.venv/
+.test-deps/
+__pycache__/
+.pytest_cache/
+.pytest-local-*/
+*.py[cod]
+.coverage
+test-results.xml
+report/*.pbix
+!report/power-platform-ops-dashboard.pbix
+*.pbit
+*.zip
+.env
+.DS_Store
+Thumbs.db
