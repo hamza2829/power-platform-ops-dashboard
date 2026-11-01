@@ -22,6 +22,8 @@ Code execution above was performed by Codex. No claim is made that the user has 
 
 ## Start here
 
+For the team wiki and training material (data model, cleansing rules, KPI definitions, user guide, training, FAQ), see [docs/wiki](docs/wiki/Home.md).
+
 The CSVs are already included. You can go straight to [Build in Power BI Desktop in about 90 minutes](report/BUILD_IN_90_MINUTES.md), then use the [visual-by-visual specification](report/SPECIFICATION.md). Python is only needed to regenerate the data or run tests.
 
 ```text
@@ -31,9 +33,9 @@ dax/           CALENDAR date table, 16 measures, definitions and formatting note
 report/        Three-page spec, 90-minute guide, PBIX policy and screenshot placeholders
 automation/    OPTIONAL SharePoint schema, notification flow and canvas app designs
 tests/         Generator/data-contract/reference tests
-tools/         Python reference totals and committed-data checker
-docs/          Reference numbers, verification status and interview notes
-.github/       Ubuntu test workflow
+tools/         Python reference totals, committed-data checker, docs link/KPI checker
+docs/          Reference numbers, verification status, interview notes, team wiki (docs/wiki/)
+.github/       Ubuntu test and docs-check workflows
 ```
 
 ## Reproduce the data and run tests on Windows
